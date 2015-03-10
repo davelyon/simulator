@@ -12,27 +12,34 @@ set -e
 # Get a simulator by name, e.g.
 # iPhone 4s -> 124EA-6CDF...
 function simulator_id_from_name() {
+  shift
+  simname="$@"
   SIMULATOR_ID=$(xcrun simctl list devices | awk -f get-device.awk -v simname="$simname")
 }
 
 command="$1"
 case "$command" in
 "" | "-h" | "--help" )
-  echo "Fill me in with help."
+  cat <<END
+Usage:
+	list [devices|devicetypes|runtimes] - show all SDKs, Devices, and Device Types
+	find "Device Name" - find a device with the given name and print the identifier
+	reset "Device Name" - reset a device with the given name
+	create "Device Name" [iOS-8-X|iOS-7-X] [iPhone-4s|iPhone-5|Resizable-iPhone|...(See device types)]
+	destroy "Device Name" - Destroy the device (delete it)
+	delete  "Device Name" - (Matches underlying simctl command)
+END
+echo $HELP
   ;;
 "list" )
   shift
   xcrun simctl list $@ | awk -F"\n" -f pretty-list.awk
   ;;
 "find" )
-  shift
-  simname="$@"
   simulator_id_from_name $@
   echo $SIMULATOR_ID
   ;;
 "reset" )
-  shift
-  simname="$@"
   simulator_id_from_name $@
   xcrun simctl erase $SIMULATOR_ID
   ;;
@@ -41,8 +48,6 @@ case "$command" in
   xcrun simctl create "$1" "com.apple.CoreSimulator.SimDeviceType.$2" "com.apple.CoreSimulator.SimRuntime.$3"
   ;;
 "destroy" | "delete" )
-  shift
-  simname="$@"
   simulator_id_from_name $@
   xcrun simctl delete $SIMULATOR_ID
   ;;
