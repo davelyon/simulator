@@ -7,7 +7,7 @@ Xcode 6 ships with a nifty little utility called `simctl` that allows easy manag
 ## Homebrew
 
 ```sh
-brew tap davelyon/simulator
+brew tap davelyon/tap
 brew install simulator
 ```
 
