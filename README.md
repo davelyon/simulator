@@ -2,6 +2,19 @@
 
 Xcode 6 ships with a nifty little utility called `simctl` that allows easy management of simulators. It even lets you give them nice, readable names like "iOS7 iPad" when creating them! It does *not* however, let you reference them by those names for other commands. This means that scripting is hard because you must know or parse out the identifier for the simulator you want to target, instead of being able to refer to it by a consistent name. `simulator` wraps simctl and extends it just a bit to make it easier to work with.
 
+# Install
+
+## Homebrew
+
+```sh
+brew tap davelyon/simulator
+brew install simulator
+```
+
+## Other Options
+
+Open to suggestions, but possibly the easiest is just to clone the repo and ensure that the directory ends up in your PATH
+
 # Examples:
 
 ``` sh
