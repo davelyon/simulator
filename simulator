@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+AWKPATH=$(dirname $0)
+
 # Usage:
 # 	list [devices|devicetypes|runtimes] - show all SDKs, Devices, and Device Types
 # 	find "Device Name" - find a device with the given name and print the identifier
@@ -14,7 +16,7 @@ set -e
 function simulator_id_from_name() {
   shift
   simname="$@"
-  SIMULATOR_ID=$(xcrun simctl list devices | awk -f get-device.awk -v simname="$simname")
+  SIMULATOR_ID=$(xcrun simctl list devices | awk -f $AWKPATH/get-device.awk -v simname="$simname")
 }
 
 command="$1"
@@ -33,7 +35,7 @@ echo $HELP
   ;;
 "list" )
   shift
-  xcrun simctl list $@ | awk -F"\n" -f pretty-list.awk
+  xcrun simctl list $@ | awk -F"\n" -f $AWKPATH/pretty-list.awk
   ;;
 "find" )
   simulator_id_from_name $@
