@@ -2,6 +2,14 @@
 
 Xcode 6 ships with a nifty little utility called `simctl` that allows easy management of simulators. It even lets you give them nice, readable names like "iOS7 iPad" when creating them! It does *not* however, let you reference them by those names for other commands. This means that scripting is hard because you must know or parse out the identifier for the simulator you want to target, instead of being able to refer to it by a consistent name. `simulator` wraps simctl and extends it just a bit to make it easier to work with.
 
+# Use cases
+
+Originally inspired by trying to create a test script that every dev could run without modifying. In order to do that with `simctl`, you'd need to know the UDID which would be different on each machine.
+
+For the original case, I scripted creating 2 simulators ZTestsimulator81, ZTestSimulator71, to run tests cleanly from the command line without running the risk of clearing a developers current development data. 
+
+I created this wrapper after realizing that identifying and managing simulators by name would make any scripting task easier.
+ 
 # Install
 
 ## Homebrew
